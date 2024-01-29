@@ -60,7 +60,6 @@ route {
 
 
 tags = {
-
   Name = " Public route Table "
 }
   
@@ -68,20 +67,16 @@ tags = {
 
 
 resource "aws_route_table_association" "public" {
-
   subnet_id = aws_subnet.create_subnet.id
   route_table_id = aws_route_table.route_table_igw.id
-  
-}
+  }
 
 
 resource "aws_security_group" "web" {
-
   name = " HTTP and ssh "
   vpc_id = aws_vpc.create_vpc.id
 
   ingress  {
-
     from_port = 80
     to_port = 80
     protocol = "tcp"
@@ -89,7 +84,6 @@ resource "aws_security_group" "web" {
   }
 
   ingress {
-
     from_port = 22
     to_port = 22
     protocol = "tcp"
@@ -116,7 +110,6 @@ data "aws_ami" "latest_amazon_linux"{
 }
 
 resource "aws_instance" "test1" {
-
   ami = data.aws_ami.latest_amazon_linux.id
   instance_type = "t2.micro"
   #key_name = "terraform/MyKeyPair.pem"
@@ -125,7 +118,6 @@ resource "aws_instance" "test1" {
   associate_public_ip_address = true
   user_data = <<-EOF
   #!/bin/bash -ex
-
   amazon-linux-extras install nginx1 -y
   echo "<h1>$(curl https://api.kanye.rest/?format=text)</h1>" >  /usr/share/nginx/html/index.html 
   systemctl enable nginx
